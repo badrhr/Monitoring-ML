@@ -128,8 +128,8 @@ from urllib.request import urlopen
 ```
 ```python
 # Load labeled projects
-projects = pd.read_csv("https://raw.githubusercontent.com/GokuMohandas/Made-With-ML/main/datasets/projects.csv")
-tags = pd.read_csv("https://raw.githubusercontent.com/GokuMohandas/Made-With-ML/main/datasets/tags.csv")
+projects = pd.read_csv("datasets/projects.csv")
+tags = pd.read_csv("datasets/tags.csv")
 df = ge.dataset.PandasDataset(pd.merge(projects, tags, on="id"))
 df["text"] = df.title + " " + df.description
 df.drop(["title", "description"], axis=1, inplace=True)
@@ -189,7 +189,7 @@ df.head(5)
 
 ### Expectations
 
-The first line of measurement can be rule-based such as validating [expectations](https://docs.greatexpectations.io/en/latest/reference/glossary_of_expectations.html) around missing values, data types, value ranges, etc. as we did in our [data testing lesson](https://madewithml.com/courses/mlops/testing#expectations). These can be done with or without a reference window and using the [mostly argument](https://docs.greatexpectations.io/en/latest/reference/core_concepts/expectations/standard_arguments.html#mostly) for some level of tolerance.
+The first line of measurement can be rule-based such as validating expectations around missing values, data types, value ranges, etc. These can be done with or without a reference window and using the mostly argument for some level of tolerance.
 
 ```python
 # Simulated production data
@@ -402,7 +402,6 @@ As we can see, measuring drift is fairly straightforward for univariate data but
 </div>
 We vectorized our text using tf-idf (to keep modeling simple), which has high dimensionality and is not semantically rich in context. However, typically with text, word/char embeddings are used. So to illustrate what drift detection on multivariate data would look like, let's represent our text using pretrained embeddings.
 
-> Be sure to refer to our [embeddings](https://madewithml.com/courses/foundations/embeddings/) and [transformers](https://madewithml.com/courses/foundations/transformers/) lessons to learn more about these topics. But note that detecting drift on multivariate text embeddings is still quite difficult so it's typically more common to use these methods applied to tabular features or images.
 
 We'll start by loading the tokenizer from a pretrained model.
 
